@@ -8,9 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-/**
- *
- */
 public class TestMethodGen {
     private Method method;
     private String fieldName;
@@ -37,11 +34,11 @@ public class TestMethodGen {
 
     private List<String> genMethodInternal() {
         Type retType = method.getGenericReturnType();
-        List<String> res = new LinkedList<String>();
+        List<String> res = new LinkedList<>();
 
         res.add(StringGen.comment("Setup"));
         Parameter[] parameters = method.getParameters();
-        List<String> arguments = new LinkedList<String>();
+        List<String> arguments = new LinkedList<>();
         for (int i = 0; i < parameters.length; i++) {
             Type parType = method.getGenericParameterTypes()[i];
             String argName = parameters[i].getName();
@@ -61,11 +58,11 @@ public class TestMethodGen {
 
 
     public String gen() {
-        List<String> methodSrcCode = new LinkedList<String>();
+        List<String> methodSrcCode = new LinkedList<>();
         methodSrcCode.add("@Test");
-//        methodSrcCode.add("@SuppressWarnings({\"rawtypes\", \"unchecked\"})");
+        methodSrcCode.add("@SuppressWarnings({\"rawtypes\", \"unchecked\"})");
         methodSrcCode.add("public void " + method.getName() + "Test() throws Exception {");
-//        methodSrcCode.addAll(genMethodInternal());
+        methodSrcCode.addAll(genMethodInternal());
         methodSrcCode.add("}");
         return String.join(StringGen.ls, Util.addTabs(methodSrcCode, 1)) + StringGen.ls;
     }

@@ -11,22 +11,25 @@ import com.intellij.util.ui.UIUtil;
 import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
+
+import static java.util.Objects.*;
 
 public class SettingsDataWrapper extends DialogWrapper {
 
-    private JPanel panel = new JPanel(new GridBagLayout());
-    private JTextField txtInput = new JTextField();
-    private JTextField txtOutput = new JTextField();
-    private JTextField txtNumberOfTests = new JTextField();
+    private final JPanel panel = new JPanel(new GridBagLayout());
+    private final JTextField txtInput = new JTextField();
+    private final JTextField txtOutput = new JTextField();
+    private final JTextField txtNumberOfTests = new JTextField();
 
     protected SettingsDataWrapper(boolean canBeParent) {
         super(canBeParent);
         init();
-        setTitle("TestPlugin com.Settings");
+        setTitle("TestPlugin Com.Settings");
 
         PersistentStateComponent<SettingState> state = new SettingsPlugin().getInstance();
         if (state != null) {
-            txtInput.setText(state.getState().inputPath);
+            txtInput.setText(requireNonNull(state.getState()).inputPath);
             txtOutput.setText(state.getState().outputPath);
             txtNumberOfTests.setText(state.getState().numberOfTests);
         }
@@ -65,7 +68,7 @@ public class SettingsDataWrapper extends DialogWrapper {
 
         PersistentStateComponent<SettingState> state = new SettingsPlugin().getInstance();
 
-        state.getState().setInputPath(inputText);
+        requireNonNull(state.getState()).setInputPath(inputText);
         state.getState().setOutputPath(outputText);
         state.getState().setNumberOfTests(numberOfTests);
 
